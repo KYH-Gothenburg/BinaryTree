@@ -88,11 +88,25 @@ public class BinaryTree {
         printPostOrderRecursive(root);
     }
 
-    private boolean isInTreeRecursive(TreeNode currentNode) {
+    private boolean isInTreeRecursive(TreeNode currentNode, int value) {
+        // Exit conditions
+        if(currentNode == null) {
+            return false;
+        }
+        if(value == currentNode.getValue()) {
+            return true;
+        }
 
+        // To the left?
+        if(value < currentNode.getValue()) {
+            return isInTreeRecursive(currentNode.getLeft(), value);
+        }
+        else {  // To the right?
+            return isInTreeRecursive(currentNode.getRight(), value);
+        }
     }
 
     public boolean isInTree(int value) {
-        return isInTreeRecursive(root);
+        return isInTreeRecursive(root, value);
     }
 }
