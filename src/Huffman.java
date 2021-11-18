@@ -2,6 +2,7 @@ import java.util.HashMap;
 import java.util.PriorityQueue;
 
 public class Huffman {
+    private HuffmanNode root;
     /*
     Steps:
     1. Count the character frequencies for each character and store in a sorted structure
@@ -13,7 +14,19 @@ public class Huffman {
     7. Repeat until we only have one node left in the list
      */
 
-    public String compress(String text) {
+    private void printCodesRecursive(HuffmanNode currentNode, String code) {
+        // Exit condition
+            // print the character and the content of code
+            return;
+
+        // Recursive calls
+    }
+
+    public void printCodes() {
+        printCodesRecursive(root, "");
+    }
+
+    public void compress(String text) {
         // Count character frequency using a hashmap. The key is the character, the value is the
         // frequency count
         HashMap<Character, Integer> freqMap = new HashMap<>();
@@ -36,11 +49,22 @@ public class Huffman {
             // Add this node to the queue
             freqQueue.add(node);
         }
-        int numValues = freqQueue.size();
-        for(int i = 0; i < numValues; i++) {
-            HuffmanNode hn = freqQueue.poll();
-            System.out.println(hn.getCharacter() + " " + hn.getFrequency());
+
+        // Loop until we only have one node in the queue
+        while(freqQueue.size() > 1) {
+            // Remove the two nodes with the least frequency
+            HuffmanNode left = freqQueue.poll();
+            HuffmanNode right = freqQueue.poll();
+            // Create a new node with the sum of the two removed nodes frequencies
+            HuffmanNode newNode = new HuffmanNode('-', left.getFrequency() + right.getFrequency());
+            // Set one of the nodes to the left of the new node
+            newNode.setLeft(left);
+            // and the other to the right
+            newNode.setRight(right);
+            // Add the new node to the priority queue
+            freqQueue.add(newNode);
         }
-        return "";
+        // We have only one node in hte queue, that is our root
+        root = freqQueue.poll();
     }
 }
