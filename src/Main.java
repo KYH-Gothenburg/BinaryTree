@@ -1,8 +1,17 @@
+import java.util.AbstractMap;
+
 public class Main {
     public static void main(String[] args) {
+        //String input = "alla gillar glass";
+        String input = "Huffman är kul";
         Huffman huffman = new Huffman();
-        huffman.compress("alla gillar glass");
-
+        AbstractMap.SimpleEntry<Long, Integer> result = huffman.compress(input);
+        long code = result.getKey();
+        int bits = result.getValue();
+        String text = huffman.uncompress(code, bits);
+        System.out.println(text);
+        System.out.println("Compression rate: " + input.length() * 8 + " bits uncompressed, " + bits + " bits compressed");
+        //huffman.printCodes();
 //        BinaryTree binTree = new BinaryTree();
 //        binTree.add(10);
 //        binTree.add(5);
